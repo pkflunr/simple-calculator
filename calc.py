@@ -5,7 +5,7 @@ from decimal import *
 ### constants
 ROW_COUNT = 3
 ## enum basically im lazy shut up
-ADD = 0
+ADD = 4
 SUBTRACT = 1
 MULTIPLY = 2
 DIVIDE = 3
@@ -18,15 +18,20 @@ buttons = []
 
 first_string = ""
 second_string = ""
+result = ""
 
 has_decimal = False
 first_string_selected = True # true if first number is being inputted, false if second is
-operation_selected = False
+current_operator = None
 result_displayed = False
 
 def input_number(x):
-    global first_string, second_string, first_string_selected
-    if first_string_selected:
+    global first_string, second_string, first_string_selected, result_displayed
+    if result_displayed:
+        first_string_selected = True
+        result_displayed = False
+        result = ""
+    if not current_operator:
         first_string += str(x)
         num_label.config(text = first_string)
     else:
@@ -39,17 +44,66 @@ def input_decimal():
         input_number(".")
         has_decimal = True
 
+def input_operator(operator):
+    global current_operator, first_string, second_string, first_string_selected, result_displayed
+    
+    # ignore this input if you hit an operator button before entering any input
+    if first_string_selected and not first_string:
+        print("attempted to enter an operator without entering a number first")
+        return
+
+    if not current_operator:
+        current_operator = operator
+        first_string_selected = False
+    elif second_string:
+        get_result()
+        first_string = result
+        result = ""
+        result_displayed = False
+        current_operator = operator
+        first_string_selected = False
+
+        
+def get_result():
+    global first_string, second_string, result, current_operator, result_displayed, first_string_selected
+    global ADD, SUBTRACT, MULTIPLY, DIVIDE
+    if first_string and second_string and current_operator:
+        # damn you python. using magic numbers
+        match current_operator:
+            case 4:
+                result = str(Decimal(first_string) + Decimal(second_string))
+            case 1:
+                result = str(Decimal(first_string) - Decimal(second_string))
+            case 2:
+                result = str(Decimal(first_string) * Decimal(second_string))
+            case 3:
+                result = str(Decimal(first_string) / Decimal(second_string))
+        num_label.config(text = result)
+        result_displayed = True
+        first_string = ""
+        second_string = ""
+        current_operator = None
+
+def clear():
+    global first_string, second_string, first_string_selected, result, result_displayed
+    num_label.config(text = "")
+    if result_displayed:
+        result = ""
+    elif first_string_selected:
+        first_string = ""
+    else:
+        second_string = ""
 
 for i in range(10):
     buttons.append(ttk.Button(window, text = str(i), command = lambda j=i:input_number(j)))
 
 buttons.append(ttk.Button(window, text = ".", command = input_decimal))
-buttons.append(ttk.Button(window, text = "+"))
-buttons.append(ttk.Button(window, text = "-"))
-buttons.append(ttk.Button(window, text = "*"))
-buttons.append(ttk.Button(window, text = "/"))
-buttons.append(ttk.Button(window, text = "="))
-buttons.append(ttk.Button(window, text = "C"))
+buttons.append(ttk.Button(window, text = "+", command = lambda j=ADD:input_operator(j)))
+buttons.append(ttk.Button(window, text = "-", command = lambda j=SUBTRACT:input_operator(j)))
+buttons.append(ttk.Button(window, text = "*", command = lambda j=MULTIPLY:input_operator(j)))
+buttons.append(ttk.Button(window, text = "/", command = lambda j=DIVIDE:input_operator(j)))
+buttons.append(ttk.Button(window, text = "=", command = get_result))
+buttons.append(ttk.Button(window, text = "C", command = clear))
 
 num_label.grid(row = 0, column = 0, columnspan = ROW_COUNT, sticky = "NEWS")
 
