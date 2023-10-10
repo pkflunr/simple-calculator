@@ -10,8 +10,11 @@ num_label = ttk.Label(window, text = "12345679", background = "white")
 
 buttons = []
 
+def input_number(x):
+    print(x)
+
 for i in range(10):
-    buttons.append(ttk.Button(window, text = str(i)))
+    buttons.append(ttk.Button(window, text = str(i), command = lambda j=i:input_number(j)))
 
 buttons.append(ttk.Button(window, text = "."))
 buttons.append(ttk.Button(window, text = "+"))
