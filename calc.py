@@ -13,16 +13,24 @@ buttons = []
 
 test_string = ""
 
+has_decimal = False
+
 def input_number(x):
     global test_string
     test_string += str(x)
     num_label.config(text = test_string)
-    
+
+def input_decimal():
+    global has_decimal
+    if not has_decimal:
+        input_number(".")
+        has_decimal = True
+
 
 for i in range(10):
     buttons.append(ttk.Button(window, text = str(i), command = lambda j=i:input_number(j)))
 
-buttons.append(ttk.Button(window, text = "."), command = lambda j=".":input_number(j))
+buttons.append(ttk.Button(window, text = ".", command = input_decimal))
 buttons.append(ttk.Button(window, text = "+"))
 buttons.append(ttk.Button(window, text = "-"))
 buttons.append(ttk.Button(window, text = "*"))
