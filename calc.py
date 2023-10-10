@@ -1,17 +1,23 @@
 import tkinter as tk
 from tkinter import ttk
+from decimal import *
 
 ### constants
 ROW_COUNT = 3
 
 window = tk.Tk()
 
-num_label = ttk.Label(window, text = "12345679", background = "white")
+num_label = ttk.Label(window, text = "", background = "white", anchor=tk.E)
 
 buttons = []
 
+test_string = ""
+
 def input_number(x):
-    print(x)
+    global test_string
+    test_string += str(x)
+    num_label.config(text = test_string)
+    
 
 for i in range(10):
     buttons.append(ttk.Button(window, text = str(i), command = lambda j=i:input_number(j)))
