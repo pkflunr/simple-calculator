@@ -17,6 +17,7 @@ buttons.append(tk.Button(window, text = "-"))
 buttons.append(tk.Button(window, text = "*"))
 buttons.append(tk.Button(window, text = "/"))
 buttons.append(tk.Button(window, text = "."))
+buttons.append(tk.Button(window, text = "="))
 buttons.append(tk.Button(window, text = "C"))
 
 num_label.grid(row = 0, column = 0, columnspan = 2, sticky = "NEWS")
