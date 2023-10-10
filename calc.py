@@ -4,6 +4,11 @@ from decimal import *
 
 ### constants
 ROW_COUNT = 3
+## enum basically im lazy shut up
+ADD = 0
+SUBTRACT = 1
+MULTIPLY = 2
+DIVIDE = 3
 
 window = tk.Tk()
 
@@ -11,14 +16,22 @@ num_label = ttk.Label(window, text = "", background = "white", anchor=tk.E)
 
 buttons = []
 
-test_string = ""
+first_string = ""
+second_string = ""
 
 has_decimal = False
+first_string_selected = True # true if first number is being inputted, false if second is
+operation_selected = False
+result_displayed = False
 
 def input_number(x):
-    global test_string
-    test_string += str(x)
-    num_label.config(text = test_string)
+    global first_string, second_string, first_string_selected
+    if first_string_selected:
+        first_string += str(x)
+        num_label.config(text = first_string)
+    else:
+        second_string += str(x)
+        num_label.config(text = second_string)
 
 def input_decimal():
     global has_decimal
