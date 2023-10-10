@@ -1,5 +1,8 @@
 import tkinter as tk
 
+### constants
+ROW_COUNT = 3
+
 window = tk.Tk()
 
 num_label = tk.Label(window, text = "12345679")
@@ -18,10 +21,10 @@ buttons.append(tk.Button(window, text = "C"))
 
 num_label.grid(row = 0, column = 0, columnspan = 2, sticky = "NEWS")
 
-counter = 3
+counter = ROW_COUNT
 
 for b in buttons:
-    b.grid(column = (counter % 3), row = int(counter / 3), sticky = "NEWS")
+    b.grid(column = (counter % ROW_COUNT), row = int(counter / ROW_COUNT), sticky = "NEWS")
     counter += 1
 
 window.mainloop()
