@@ -1,26 +1,27 @@
 import tkinter as tk
+from tkinter import ttk
 
 ### constants
 ROW_COUNT = 3
 
 window = tk.Tk()
 
-num_label = tk.Label(window, text = "12345679")
+num_label = ttk.Label(window, text = "12345679", background = "white")
 
 buttons = []
 
 for i in range(10):
-    buttons.append(tk.Button(window, text = str(i)))
+    buttons.append(ttk.Button(window, text = str(i)))
 
-buttons.append(tk.Button(window, text = "+"))
-buttons.append(tk.Button(window, text = "-"))
-buttons.append(tk.Button(window, text = "*"))
-buttons.append(tk.Button(window, text = "/"))
-buttons.append(tk.Button(window, text = "."))
-buttons.append(tk.Button(window, text = "="))
-buttons.append(tk.Button(window, text = "C"))
+buttons.append(ttk.Button(window, text = "."))
+buttons.append(ttk.Button(window, text = "+"))
+buttons.append(ttk.Button(window, text = "-"))
+buttons.append(ttk.Button(window, text = "*"))
+buttons.append(ttk.Button(window, text = "/"))
+buttons.append(ttk.Button(window, text = "="))
+buttons.append(ttk.Button(window, text = "C"))
 
-num_label.grid(row = 0, column = 0, columnspan = 2, sticky = "NEWS")
+num_label.grid(row = 0, column = 0, columnspan = ROW_COUNT, sticky = "NEWS")
 
 counter = ROW_COUNT
 
