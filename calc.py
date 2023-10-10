@@ -22,7 +22,7 @@ def input_number(x):
 for i in range(10):
     buttons.append(ttk.Button(window, text = str(i), command = lambda j=i:input_number(j)))
 
-buttons.append(ttk.Button(window, text = "."))
+buttons.append(ttk.Button(window, text = "."), command = lambda j=".":input_number(j))
 buttons.append(ttk.Button(window, text = "+"))
 buttons.append(ttk.Button(window, text = "-"))
 buttons.append(ttk.Button(window, text = "*"))
